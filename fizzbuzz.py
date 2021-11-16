@@ -1,21 +1,16 @@
 
+
 def calc_fizz_buzz(number):
-    if (number % 3 == 0 and number % 5 == 0 and number % 7 == 0):
-        return "fizzbuzzfuzz"
-    if (number % 3 == 0 and number % 7 == 0):
-        return "fizzfuzz"
-    if (number % 5 == 0 and number % 7 == 0):
-        return "buzzfuzz"
-    if (number % 3 == 0 and number % 5 == 0):
-        return "fizzbuzz"
-    if (number % 7 == 0):
-        return "fuzz"
+    s = ""
     if (number % 3 == 0):
-        return "fizz"
-    elif (number % 5 == 0):
-        return "buzz"
-    else:
-        return str(number)
+        s += "fizz"
+    if (number % 5 == 0):
+        s += "buzz"
+    if (number % 7 == 0):
+        s += "fuzz"
+    if (s == ""):
+        s = number
+    return s
 
 
 if __name__ == "__main__":
