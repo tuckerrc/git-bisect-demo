@@ -1,20 +1,20 @@
 
 
 def calc_fizz_buzz(number):
-    s = ""
+    output = ""
     if (number % 3 == 0):
-        s += "fizz"
+        output += "fizz"
     if (number % 5 == 0):
-        s += "buzz"
+        output += "buzz"
     if (number % 7 == 0):
-        s += "fuzz"
+        output += "fuzz"
     if (number % 11 == 0):
-        s += "bizz"
+        output += "bizz"
     if (number % 13 == 0):
-        s += "biff"
-    if (s == ""):
-        s = number
-    return s
+        output += "biff"
+    if (output == ""):
+        output = number
+    return output
 
 
 if __name__ == "__main__":
