@@ -8,6 +8,8 @@ def calc_fizz_buzz(number):
         s += "buzz"
     if (number % 7 == 0):
         s += "fuzz"
+    if (number % 11 == 0):
+        s += "bizz"
     if (s == ""):
         s = number
     return s
