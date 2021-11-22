@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/night.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section
+          data-markdown
+          data-transition-speed="fast"
+          data-transition="fade"
+        >
+          <textarea data-template>
+# $ git bisect
+---
+## $ git bisect
+Use binary search to find the commit that introduced a bug 🐛
+
+([git documentation](https://git-scm.com/docs/git-bisect))
+
+---
+### Why use git bisect?
+
+ - Find context for a bug
+ - `$ git blame` was inconclusive
+ - many commits between release (single tenant??)
+---
+#### How to
+
+$ git bisect start|good|bad|reset
+---
+#### Starting a session
+
+``` plaintext
+$ git bisect start
+$ git bisect bad [know bad commit] ## optional -- defaults to current commit
+$ git bisect good [known good commit]
+Bisecting: 4 revisions left to test after this (roughly 2 steps)
+[commit hash] Commit message
+```
+---
+#### Step through and test
+``` plaintext
+ $ git bisect good
+   Bisecting: 4 revisions left to test after this (roughly 2 steps)
+   [945026e9f21056460ee6e9195e81f60b5caf5dd5] Add 7 fuzz
+ $
+```
+---
+```plaintext
+ $ git bisect good
+   Bisecting: 4 revisions left to test after this (roughly 2 steps)
+   [945026e9f21056460ee6e9195e81f60b5caf5dd5] Add 7 fuzz
+ $ git bisect good
+   Bisecting: 2 revisions left to test after this (roughly 1 step)
+   [2b230cf64bc521b7bdff9c52deb9ee67794b795b] Refactor to simpler method
+ $
+```
+---
+```plaintext
+ $ git bisect good
+   Bisecting: 4 revisions left to test after this (roughly 2 steps)
+   [945026e9f21056460ee6e9195e81f60b5caf5dd5] Add 7 fuzz
+ $ git bisect good
+   Bisecting: 2 revisions left to test after this (roughly 1 step)
+   [2b230cf64bc521b7bdff9c52deb9ee67794b795b] Refactor to simpler method
+ $ git bisect bad
+   Bisecting: 0 revisions left to test after this (roughly 0 steps)
+   [3fe16b74438a496630f3ace529f8f2e1ae854907] Add 7 fuzz for all cases
+ $
+```
+---
+```plaintext
+ $ git bisect good
+   Bisecting: 4 revisions left to test after this (roughly 2 steps)
+   [945026e9f21056460ee6e9195e81f60b5caf5dd5] Add 7 fuzz
+ $ git bisect good
+   Bisecting: 2 revisions left to test after this (roughly 1 step)
+   [2b230cf64bc521b7bdff9c52deb9ee67794b795b] Refactor to simpler method
+ $ git bisect bad
+   Bisecting: 0 revisions left to test after this (roughly 0 steps)
+   [3fe16b74438a496630f3ace529f8f2e1ae854907] Add 7 fuzz for all cases
+ $ git bisect good
+   2b230cf64bc521b7bdff9c52deb9ee67794b795b is the first bad commit
+   commit 2b230cf64bc521b7bdff9c52deb9ee67794b795b
+   Author: Tucker Chapman <tucker.chapman@dbtlabs.com>
+   Date:   Tue Nov 16 14:09:55 2021 -0500
+ 
+       Refactor to simpler method
+ 
+    fizzbuzz.py | 25 ++++++++++---------------
+    1 file changed, 10 insertions(+), 15 deletions(-)
+ 
+ ```
+---
+### $ git bisect log
+
+If you accidentally marked a good commit bad or a bad commit good don't start over you can fix it!
+
+```plaintext
+$ git bisect log > bisect.log
+```
+
+Fix the incorrect entry
+
+``` plaintext
+$ git bisect reset
+$ git bisect replay bisect.log
+```
+---
+## Demo
+---
+### $ git bisect run
+
+The script should return 0 if the current code is good/old and exit with a code between 1 and 127 if the source code is bad/new
+---
+## Git Commit
+
+![git commit](https://imgs.xkcd.com/comics/git_commit.png)
+          </textarea>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+        width: 1280,
+        height: 720,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>
